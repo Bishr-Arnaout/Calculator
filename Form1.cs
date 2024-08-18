@@ -1,6 +1,7 @@
 ﻿using Guna.UI2.WinForms;
 using System;
 using System.Drawing.Text;
+using System.Threading;
 using System.Windows.Forms;
 
 namespace Calculator
@@ -216,13 +217,7 @@ namespace Calculator
             GetDiffrencesBetweenMonths();
             GetDiffrencesBetweenDays();
         }
-        private void dtpBirthday_ValueChanged(object sender, EventArgs e)
-        {
-            GetTheDiffrenceBetweenDates();
-            GetNextBirthday();
-            GetSummary();
-        }
-        private void dtpToday_ValueChanged(object sender, EventArgs e)
+        private void CalculateAge(object sender, EventArgs e)
         {
             GetTheDiffrenceBetweenDates();
             GetNextBirthday();
@@ -302,6 +297,716 @@ namespace Calculator
             CalculateTotalDays();
             CalculateTotalHours();
             CalculateTotalMinutes();
+        }
+        private void ConvertToTheSameSystem(object sender)
+        {
+            txt2.Text = txt1.Text;
+        }
+        private void ConvertBinaryToOctal(object sender)
+        {
+            uint OctalNum = 0;
+            string OctalString = "";
+            int Power = 0;
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                if (Power == 3)
+                {
+                    Power = 0;
+                    OctalString = OctalString.Insert(0, OctalNum.ToString());
+                    OctalNum = 0;
+                }
+
+                if (txt1.Text[txt1.TextLength - 1 - i] == '1')
+                    OctalNum += (uint)Math.Pow(2, Power);
+                Power++;
+            }
+            OctalString = OctalString.Insert(0, OctalNum.ToString());
+
+            txt2.Text = OctalString;
+        }
+        private void ConvertBinaryToDecimal(object sender)
+        {
+            uint DecimalNum = 0;
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                if (txt1.Text[txt1.TextLength - 1 - i] == '1')
+                    DecimalNum += (uint)Math.Pow(2, i);
+            }
+            txt2.Text = DecimalNum.ToString();
+        }
+        private void ConvertBinaryToHexadecimal(object sender)
+        {
+            uint HexadecimalNum = 0;
+            int Power = 0;
+            string HexadecimalString = "";
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                if (Power == 4)
+                {
+                    Power = 0;
+                    if (HexadecimalNum == 10) HexadecimalString = HexadecimalString.Insert(0, "A");
+                    else if (HexadecimalNum == 11) HexadecimalString = HexadecimalString.Insert(0, "B");
+                    else if (HexadecimalNum == 12) HexadecimalString = HexadecimalString.Insert(0, "C");
+                    else if (HexadecimalNum == 13) HexadecimalString = HexadecimalString.Insert(0, "D");
+                    else if (HexadecimalNum == 14) HexadecimalString = HexadecimalString.Insert(0, "E");
+                    else if (HexadecimalNum == 15) HexadecimalString = HexadecimalString.Insert(0, "F");
+                    else HexadecimalString = HexadecimalString.Insert(0, HexadecimalNum.ToString());
+                    HexadecimalNum = 0;
+                }
+
+                if (txt1.Text[txt1.TextLength - 1 - i] == '1')
+                    HexadecimalNum += (uint)Math.Pow(2, Power);
+                Power++;
+            }
+            if (HexadecimalNum == 10) HexadecimalString = HexadecimalString.Insert(0, "A");
+            else if (HexadecimalNum == 11) HexadecimalString = HexadecimalString.Insert(0, "B");
+            else if (HexadecimalNum == 12) HexadecimalString = HexadecimalString.Insert(0, "C");
+            else if (HexadecimalNum == 13) HexadecimalString = HexadecimalString.Insert(0, "D");
+            else if (HexadecimalNum == 14) HexadecimalString = HexadecimalString.Insert(0, "E");
+            else if (HexadecimalNum == 15) HexadecimalString = HexadecimalString.Insert(0, "F");
+            else HexadecimalString = HexadecimalString.Insert(0, HexadecimalNum.ToString());
+
+            txt2.Text = HexadecimalString;
+        }
+        private void ConvertOctalToBinary(object sender)
+        {
+            string BinaryString = "";
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                switch(txt1.Text[txt1.TextLength - 1 - i])
+                {
+                    case '0':
+                        BinaryString = BinaryString.Insert(0, "000");
+                        break;
+                    case '1':
+                        BinaryString = BinaryString.Insert(0, "001");
+                        break;
+                    case '2':
+                        BinaryString = BinaryString.Insert(0, "010");
+                        break;
+                    case '3':
+                        BinaryString = BinaryString.Insert(0, "011");
+                        break;
+                    case '4':
+                        BinaryString = BinaryString.Insert(0, "100");
+                        break;
+                    case '5':
+                        BinaryString = BinaryString.Insert(0, "101");
+                        break;
+                    case '6':
+                        BinaryString = BinaryString.Insert(0, "101");
+                        break;
+                    case '7':
+                        BinaryString = BinaryString.Insert(0, "111");
+                        break;
+                }
+            }
+            if (BinaryString == string.Empty) BinaryString = "0";
+            else
+                while (BinaryString[0] != '1') BinaryString = BinaryString.Substring(1);
+
+            txt2.Text = BinaryString;
+        }
+        private void ConvertOctalToDecimal(object sender)
+        {
+            uint DecimalNumber = 0;
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                int CurrentDigit = Convert.ToInt32(txt1.Text[txt1.TextLength - 1 - i] - 48);
+                DecimalNumber += (uint)(Math.Pow(8, i) * CurrentDigit);
+            }
+            txt2.Text = DecimalNumber.ToString();
+        }
+        private void ConvertOctalToHexadecimal(object sender)
+        {
+            string BinaryString = "";
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                switch (txt1.Text[txt1.TextLength - 1 - i])
+                {
+                    case '0':
+                        BinaryString = BinaryString.Insert(0, "000");
+                        break;
+                    case '1':
+                        BinaryString = BinaryString.Insert(0, "001");
+                        break;
+                    case '2':
+                        BinaryString = BinaryString.Insert(0, "010");
+                        break;
+                    case '3':
+                        BinaryString = BinaryString.Insert(0, "011");
+                        break;
+                    case '4':
+                        BinaryString = BinaryString.Insert(0, "100");
+                        break;
+                    case '5':
+                        BinaryString = BinaryString.Insert(0, "101");
+                        break;
+                    case '6':
+                        BinaryString = BinaryString.Insert(0, "101");
+                        break;
+                    case '7':
+                        BinaryString = BinaryString.Insert(0, "111");
+                        break;
+                }
+            }
+            if (BinaryString == string.Empty) BinaryString = "0";
+            else
+                while (BinaryString[0] != '1') BinaryString = BinaryString.Substring(1);
+
+            uint HexadecimalNum = 0;
+            string HexadecimalString = "";
+            int Power = 0;
+
+            for (int i = 0; i < BinaryString.Length; i++)
+            {
+                if (Power == 4)
+                {
+                    Power = 0;
+                    if (HexadecimalNum == 10) HexadecimalString = HexadecimalString.Insert(0, "A");
+                    else if (HexadecimalNum == 11) HexadecimalString = HexadecimalString.Insert(0, "B");
+                    else if (HexadecimalNum == 12) HexadecimalString = HexadecimalString.Insert(0, "C");
+                    else if (HexadecimalNum == 13) HexadecimalString = HexadecimalString.Insert(0, "D");
+                    else if (HexadecimalNum == 14) HexadecimalString = HexadecimalString.Insert(0, "E");
+                    else if (HexadecimalNum == 15) HexadecimalString = HexadecimalString.Insert(0, "F");
+                    else HexadecimalString = HexadecimalString.Insert(0, HexadecimalNum.ToString());
+                    HexadecimalNum = 0;
+                }
+
+                if (BinaryString[BinaryString.Length - 1 - i] == '1')
+                    HexadecimalNum += (uint)Math.Pow(2, Power);
+                Power++;
+            }
+            if (HexadecimalNum == 10) HexadecimalString = HexadecimalString.Insert(0, "A");
+            else if (HexadecimalNum == 11) HexadecimalString = HexadecimalString.Insert(0, "B");
+            else if (HexadecimalNum == 12) HexadecimalString = HexadecimalString.Insert(0, "C");
+            else if (HexadecimalNum == 13) HexadecimalString = HexadecimalString.Insert(0, "D");
+            else if (HexadecimalNum == 14) HexadecimalString = HexadecimalString.Insert(0, "E");
+            else if (HexadecimalNum == 15) HexadecimalString = HexadecimalString.Insert(0, "F");
+            else HexadecimalString = HexadecimalString.Insert(0, HexadecimalNum.ToString());
+
+            txt2.Text = HexadecimalString;
+        }
+        private void ConvertDecimalToBinary(object sender)
+        {
+            if (txt1.Text == string.Empty)
+            {
+                txt2.Text = "0";
+                return;
+            }
+            if (txt1.Text == "0")
+            {
+                txt2.Text = "0";
+                return;
+            }
+            ulong NumberAfterDivision = Convert.ToUInt64(txt1.Text);
+            string BinaryString = "";
+
+            while (NumberAfterDivision != 0)
+            {
+                BinaryString = BinaryString.Insert(0, (NumberAfterDivision % 2).ToString());
+                NumberAfterDivision /= 2;
+            }
+            txt2.Text = BinaryString;
+        }
+        private void ConvertDecimalToOctal(object sender)
+        {
+            if (txt1.Text == string.Empty)
+            {
+                txt2.Text = "0";
+                return;
+            }
+            if (txt1.Text == "0")
+            {
+                txt2.Text = "0";
+                return;
+            }
+            ulong NumberAfterDivision = Convert.ToUInt64(txt1.Text);
+            string OctalString = "";
+
+            while (NumberAfterDivision != 0)
+            {
+                OctalString = OctalString.Insert(0, (NumberAfterDivision % 8).ToString());
+                NumberAfterDivision /= 8;
+            }
+            txt2.Text = OctalString;
+        }
+        private void ConvertDecimalToHexadecimal(object sender)
+        {
+            if (txt1.Text == string.Empty)
+            {
+                txt2.Text = "0";
+                return;
+            }
+            if (txt1.Text == "0")
+            {
+                txt2.Text = "0";
+                return;
+            }
+            ulong NumberAfterDivision = Convert.ToUInt64(txt1.Text);
+            string HexadecimalString = "";
+
+            while (NumberAfterDivision != 0)
+            {
+                if (NumberAfterDivision % 16 == 10) HexadecimalString = HexadecimalString.Insert(0, "A");
+                else if (NumberAfterDivision % 16 == 11) HexadecimalString = HexadecimalString.Insert(0, "B");
+                else if (NumberAfterDivision % 16 == 12) HexadecimalString = HexadecimalString.Insert(0, "C");
+                else if (NumberAfterDivision % 16 == 13) HexadecimalString = HexadecimalString.Insert(0, "D");
+                else if (NumberAfterDivision % 16 == 14) HexadecimalString = HexadecimalString.Insert(0, "E");
+                else if (NumberAfterDivision % 16 == 15) HexadecimalString = HexadecimalString.Insert(0, "F");
+                else HexadecimalString = HexadecimalString.Insert(0, (NumberAfterDivision % 16).ToString());
+                NumberAfterDivision /= 16;
+            }
+            txt2.Text = HexadecimalString;
+        }
+        private void ConvertHexadecimalToBinary(object sender)
+        {
+            string BinaryString = "";
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                switch(txt1.Text[txt1.TextLength - 1 - i])
+                {
+                    case '0':
+                        BinaryString = BinaryString.Insert(0, "0000");
+                        break;
+                    case '1':
+                        BinaryString = BinaryString.Insert(0, "0001");
+                        break;
+                    case '2':
+                        BinaryString = BinaryString.Insert(0, "0010");
+                        break;
+                    case '3':
+                        BinaryString = BinaryString.Insert(0, "0011");
+                        break;
+                    case '4':
+                        BinaryString = BinaryString.Insert(0, "0100");
+                        break;
+                    case '5':
+                        BinaryString = BinaryString.Insert(0, "0101");
+                        break;
+                    case '6':
+                        BinaryString = BinaryString.Insert(0, "0110");
+                        break;
+                    case '7':
+                        BinaryString = BinaryString.Insert(0, "0111");
+                        break;
+                    case '8':
+                        BinaryString = BinaryString.Insert(0, "1000");
+                        break;
+                    case '9':
+                        BinaryString = BinaryString.Insert(0, "1001");
+                        break;
+                    case 'A':
+                        BinaryString = BinaryString.Insert(0, "1010");
+                        break;
+                    case 'a':
+                        BinaryString = BinaryString.Insert(0, "1010");
+                        break;
+                    case 'B':
+                        BinaryString = BinaryString.Insert(0, "1011");
+                        break;
+                    case 'b':
+                        BinaryString = BinaryString.Insert(0, "1011");
+                        break;
+                    case 'C':
+                        BinaryString = BinaryString.Insert(0, "1100");
+                        break;
+                    case 'c':
+                        BinaryString = BinaryString.Insert(0, "1100");
+                        break;
+                    case 'D':
+                        BinaryString = BinaryString.Insert(0, "1101");
+                        break;
+                    case 'd':
+                        BinaryString = BinaryString.Insert(0, "1101");
+                        break;
+                    case 'E':
+                        BinaryString = BinaryString.Insert(0, "1110");
+                        break;
+                    case 'e':
+                        BinaryString = BinaryString.Insert(0, "1110");
+                        break;
+                    case 'F':
+                        BinaryString = BinaryString.Insert(0, "1111");
+                        break;
+                    case 'f':
+                        BinaryString = BinaryString.Insert(0, "1111");
+                        break;
+                }
+            }
+            if (BinaryString == string.Empty) BinaryString = "0";
+            else
+                while (BinaryString[0] != '1') BinaryString = BinaryString.Substring(1);
+
+            txt2.Text = BinaryString;
+        }
+        private void ConvertHexadecimalToOctal(object sender)
+        {
+            string BinaryString = "";
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                switch (txt1.Text[txt1.TextLength - 1 - i])
+                {
+                    case '0':
+                        BinaryString = BinaryString.Insert(0, "0000");
+                        break;
+                    case '1':
+                        BinaryString = BinaryString.Insert(0, "0001");
+                        break;
+                    case '2':
+                        BinaryString = BinaryString.Insert(0, "0010");
+                        break;
+                    case '3':
+                        BinaryString = BinaryString.Insert(0, "0011");
+                        break;
+                    case '4':
+                        BinaryString = BinaryString.Insert(0, "0100");
+                        break;
+                    case '5':
+                        BinaryString = BinaryString.Insert(0, "0101");
+                        break;
+                    case '6':
+                        BinaryString = BinaryString.Insert(0, "0110");
+                        break;
+                    case '7':
+                        BinaryString = BinaryString.Insert(0, "0111");
+                        break;
+                    case '8':
+                        BinaryString = BinaryString.Insert(0, "1000");
+                        break;
+                    case '9':
+                        BinaryString = BinaryString.Insert(0, "1001");
+                        break;
+                    case 'A':
+                        BinaryString = BinaryString.Insert(0, "1010");
+                        break;
+                    case 'a':
+                        BinaryString = BinaryString.Insert(0, "1010");
+                        break;
+                    case 'B':
+                        BinaryString = BinaryString.Insert(0, "1011");
+                        break;
+                    case 'b':
+                        BinaryString = BinaryString.Insert(0, "1011");
+                        break;
+                    case 'C':
+                        BinaryString = BinaryString.Insert(0, "1100");
+                        break;
+                    case 'c':
+                        BinaryString = BinaryString.Insert(0, "1100");
+                        break;
+                    case 'D':
+                        BinaryString = BinaryString.Insert(0, "1101");
+                        break;
+                    case 'd':
+                        BinaryString = BinaryString.Insert(0, "1101");
+                        break;
+                    case 'E':
+                        BinaryString = BinaryString.Insert(0, "1110");
+                        break;
+                    case 'e':
+                        BinaryString = BinaryString.Insert(0, "1110");
+                        break;
+                    case 'F':
+                        BinaryString = BinaryString.Insert(0, "1111");
+                        break;
+                    case 'f':
+                        BinaryString = BinaryString.Insert(0, "1111");
+                        break;
+                }
+            }
+            if (BinaryString == string.Empty) BinaryString = "0";
+            else
+                while (BinaryString[0] != '1') BinaryString = BinaryString.Substring(1);
+
+            uint OctalNum = 0;
+            string OctalString = "";
+            int Power = 0;
+
+            for (int i = 0; i < BinaryString.Length; i++)
+            {
+                if (Power == 3)
+                {
+                    Power = 0;
+                    OctalString = OctalString.Insert(0, OctalNum.ToString());
+                    OctalNum = 0;
+                }
+
+                if (BinaryString[BinaryString.Length - 1 - i] == '1')
+                    OctalNum += (uint)Math.Pow(2, Power);
+                Power++;
+            }
+            OctalString = OctalString.Insert(0, OctalNum.ToString());
+
+            txt2.Text = OctalString;
+        }
+        private void ConvertHexadecimalToDecimal(object sender)
+        {
+            string DecimalString = "";
+            ulong DecimalNumber = 0;
+
+            for (int i = 0; i < txt1.TextLength; i++)
+            {
+                int CurrentNumber = 0;
+                switch (txt1.Text[txt1.TextLength - 1 - i])
+                {
+                    case '0':
+                        CurrentNumber = 0;
+                        break;
+                    case '1':
+                        CurrentNumber = 1;
+                        break;
+                    case '2':
+                        CurrentNumber = 2;
+                        break;
+                    case '3':
+                        CurrentNumber = 3;
+                        break;
+                    case '4':
+                        CurrentNumber = 4;
+                        break;
+                    case '5':
+                        CurrentNumber = 5;
+                        break;
+                    case '6':
+                        CurrentNumber = 6;
+                        break;
+                    case '7':
+                        CurrentNumber = 7;
+                        break;
+                    case '8':
+                        CurrentNumber = 8;
+                        break;
+                    case '9':
+                        CurrentNumber = 9;
+                        break;
+                    case 'A':
+                        CurrentNumber = 10;
+                        break;
+                    case 'a':
+                        CurrentNumber = 10;
+                        break;
+                    case 'B':
+                        CurrentNumber = 11;
+                        break;
+                    case 'b':
+                        CurrentNumber = 11;
+                        break;
+                    case 'C':
+                        CurrentNumber = 12;
+                        break;
+                    case 'c':
+                        CurrentNumber = 12;
+                        break;
+                    case 'D':
+                        CurrentNumber = 13;
+                        break;
+                    case 'd':
+                        CurrentNumber = 13;
+                        break;
+                    case 'E':
+                        CurrentNumber = 14;
+                        break;
+                    case 'e':
+                        CurrentNumber = 14;
+                        break;
+                    case 'F':
+                        CurrentNumber = 15;
+                        break;
+                    case 'f':
+                        CurrentNumber = 15;
+                        break;
+                }
+                DecimalNumber += (ulong)(Math.Pow(16, i) * CurrentNumber);
+            }
+
+            txt2.Text = DecimalNumber.ToString();
+        }
+        private void ConvertNum(object sender, EventArgs e)
+        {
+            if (sender == cbFrom)
+            {
+                txt1.Text = "1";
+                txt2.Text = "1";
+                return;
+            }
+                switch (cbFrom.SelectedIndex)
+                {
+                    case 0:
+                        switch (cbTo.SelectedIndex)
+                        {
+                            case 0:
+                                ConvertToTheSameSystem(sender);
+                                break;
+                            case 1:
+                                ConvertBinaryToOctal(sender);
+                                break;
+                            case 2:
+                                ConvertBinaryToDecimal(sender);
+                                break;
+                            case 3:
+                                ConvertBinaryToHexadecimal(sender);
+                                break;
+                        }
+                        break;
+                    case 1:
+                        switch (cbTo.SelectedIndex)
+                        {
+                            case 0:
+                                ConvertOctalToBinary(sender);
+                                break;
+                            case 1:
+                                ConvertToTheSameSystem(sender);
+                                break;
+                            case 2:
+                                ConvertOctalToDecimal(sender);
+                                break;
+                            case 3:
+                                ConvertOctalToHexadecimal(sender);
+                                break;
+                        }
+                        break;
+                    case 2:
+                        switch (cbTo.SelectedIndex)
+                        {
+                            case 0:
+                                ConvertDecimalToBinary(sender);
+                                break;
+                            case 1:
+                                ConvertDecimalToOctal(sender);
+                                break;
+                            case 2:
+                                ConvertToTheSameSystem(sender);
+                                break;
+                            case 3:
+                                ConvertDecimalToHexadecimal(sender);
+                                break;
+                        }
+                        break;
+                    case 3:
+                        switch (cbTo.SelectedIndex)
+                        {
+                            case 0:
+                                ConvertHexadecimalToBinary(sender);
+                                break;
+                            case 1:
+                                ConvertHexadecimalToOctal(sender);
+                                break;
+                            case 2:
+                                ConvertHexadecimalToDecimal(sender);
+                                break;
+                            case 3:
+                                ConvertToTheSameSystem(sender);
+                                break;
+                        }
+                        break;
+                }
+            }
+        private void IsInputCorrect(object sender, KeyPressEventArgs e)
+        {
+            if (cbFrom.SelectedIndex == 0)
+                e.Handled = !(e.KeyChar == '0' || e.KeyChar == '1' || e.KeyChar == (char)Keys.Back);
+            else if (cbFrom.SelectedIndex == 1)
+            {
+                e.Handled = !(e.KeyChar >= '0' && e.KeyChar <= '7' || e.KeyChar == (char)Keys.Back);
+            }
+            else if (cbFrom.SelectedIndex == 2)
+            {
+                e.Handled = !(Char.IsDigit(e.KeyChar) || e.KeyChar == (char)Keys.Back);
+            }
+            else
+            {
+                e.Handled = !((char.IsDigit(e.KeyChar) || (e.KeyChar >= 'A' && e.KeyChar <= 'F')
+                    || (e.KeyChar >= 'a' && e.KeyChar <= 'f') || (e.KeyChar == (char)Keys.Back)));
+            }
+        }
+        private void txt2_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            e.Handled = true;
+        }
+        private void copyToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            Clipboard.SetText(txt2.Text);
+        }
+        private void copyBothToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            switch(cbFrom.SelectedIndex)
+            {
+                case 0:
+                    switch(cbTo.SelectedIndex)
+                    {
+                        case 0:
+                            Clipboard.SetText("(2) " + txt1.Text + " = (2) " + txt2.Text);
+                            break;
+                        case 1:
+                            Clipboard.SetText("(2) " + txt1.Text + " = (8) " + txt2.Text);
+                            break;
+                        case 2:
+                            Clipboard.SetText("(2) " + txt1.Text + " = (10) " + txt2.Text);
+                            break;
+                        case 3:
+                            Clipboard.SetText("(2) " + txt1.Text + " = (16) " + txt2.Text);
+                            break;
+                    }
+                    break;
+                case 1:
+                    switch (cbTo.SelectedIndex)
+                    {
+                        case 0:
+                            Clipboard.SetText("(8) " + txt1.Text + " = (2) " + txt2.Text);
+                            break;
+                        case 1:
+                            Clipboard.SetText("(8) " + txt1.Text + " = (8) " + txt2.Text);
+                            break;
+                        case 2:
+                            Clipboard.SetText("(8) " + txt1.Text + " = (10) " + txt2.Text);
+                            break;
+                        case 3:
+                            Clipboard.SetText("(8) " + txt1.Text + " = (16) " + txt2.Text);
+                            break;
+                    }
+                    break;
+                case 2:
+                    switch (cbTo.SelectedIndex)
+                    {
+                        case 0:
+                            Clipboard.SetText("(10) " + txt1.Text + " = (2) " + txt2.Text);
+                            break;
+                        case 1:
+                            Clipboard.SetText("(10) " + txt1.Text + " = (8) " + txt2.Text);
+                            break;
+                        case 2:
+                            Clipboard.SetText("(10) " + txt1.Text + " = (10) " + txt2.Text);
+                            break;
+                        case 3:
+                            Clipboard.SetText("(10) " + txt1.Text + " = (16) " + txt2.Text);
+                            break;
+                    }
+                    break;
+                case 3:
+                    switch (cbTo.SelectedIndex)
+                    {
+                        case 0:
+                            Clipboard.SetText("(16) " + txt1.Text + " = (2) " + txt2.Text);
+                            break;
+                        case 1:
+                            Clipboard.SetText("(16) " + txt1.Text + " = (8) " + txt2.Text);
+                            break;
+                        case 2:
+                            Clipboard.SetText("(16) " + txt1.Text + " = (10) " + txt2.Text);
+                            break;
+                        case 3:
+                            Clipboard.SetText("(16) " + txt1.Text + " = (16) " + txt2.Text);
+                            break;
+                    }
+                    break;
+            }
         }
     }
 }

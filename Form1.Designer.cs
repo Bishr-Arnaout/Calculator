@@ -90,22 +90,29 @@
             this.guna2HtmlLabel2 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.guna2HtmlLabel1 = new Guna.UI2.WinForms.Guna2HtmlLabel();
             this.dtpBirthday = new Guna.UI2.WinForms.Guna2DateTimePicker();
-            this.tabPage3 = new System.Windows.Forms.TabPage();
-            this.tabPage4 = new System.Windows.Forms.TabPage();
+            this.tbNumeralConverter = new System.Windows.Forms.TabPage();
+            this.txt2 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.txt1 = new Guna.UI2.WinForms.Guna2TextBox();
+            this.cbTo = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.cbFrom = new Guna.UI2.WinForms.Guna2ComboBox();
+            this.guna2ContextMenuStrip2 = new Guna.UI2.WinForms.Guna2ContextMenuStrip();
+            this.copyToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.copyBothToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.guna2TabControl1.SuspendLayout();
             this.tpMath.SuspendLayout();
             this.guna2ContextMenuStrip1.SuspendLayout();
             this.tbAge.SuspendLayout();
             this.guna2Panel1.SuspendLayout();
+            this.tbNumeralConverter.SuspendLayout();
+            this.guna2ContextMenuStrip2.SuspendLayout();
             this.SuspendLayout();
             // 
             // guna2TabControl1
             // 
             this.guna2TabControl1.Controls.Add(this.tpMath);
             this.guna2TabControl1.Controls.Add(this.tbAge);
-            this.guna2TabControl1.Controls.Add(this.tabPage3);
-            this.guna2TabControl1.Controls.Add(this.tabPage4);
-            this.guna2TabControl1.ItemSize = new System.Drawing.Size(79, 40);
+            this.guna2TabControl1.Controls.Add(this.tbNumeralConverter);
+            this.guna2TabControl1.ItemSize = new System.Drawing.Size(105, 40);
             this.guna2TabControl1.Location = new System.Drawing.Point(0, 0);
             this.guna2TabControl1.Name = "guna2TabControl1";
             this.guna2TabControl1.SelectedIndex = 0;
@@ -125,7 +132,7 @@
             this.guna2TabControl1.TabButtonSelectedState.Font = new System.Drawing.Font("Segoe UI Semibold", 10F);
             this.guna2TabControl1.TabButtonSelectedState.ForeColor = System.Drawing.Color.DarkSeaGreen;
             this.guna2TabControl1.TabButtonSelectedState.InnerColor = System.Drawing.Color.FromArgb(((int)(((byte)(76)))), ((int)(((byte)(132)))), ((int)(((byte)(255)))));
-            this.guna2TabControl1.TabButtonSize = new System.Drawing.Size(79, 40);
+            this.guna2TabControl1.TabButtonSize = new System.Drawing.Size(105, 40);
             this.guna2TabControl1.TabIndex = 0;
             this.guna2TabControl1.TabMenuBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(64)))));
             this.guna2TabControl1.TabMenuOrientation = Guna.UI2.WinForms.TabMenuOrientation.HorizontalTop;
@@ -953,7 +960,7 @@
             this.dtpToday.Size = new System.Drawing.Size(168, 36);
             this.dtpToday.TabIndex = 3;
             this.dtpToday.Value = new System.DateTime(2024, 8, 13, 15, 16, 46, 878);
-            this.dtpToday.ValueChanged += new System.EventHandler(this.dtpToday_ValueChanged);
+            this.dtpToday.ValueChanged += new System.EventHandler(this.CalculateAge);
             // 
             // guna2HtmlLabel2
             // 
@@ -994,34 +1001,166 @@
             this.dtpBirthday.Size = new System.Drawing.Size(168, 36);
             this.dtpBirthday.TabIndex = 0;
             this.dtpBirthday.Value = new System.DateTime(2010, 1, 1, 0, 0, 0, 0);
-            this.dtpBirthday.ValueChanged += new System.EventHandler(this.dtpBirthday_ValueChanged);
+            this.dtpBirthday.ValueChanged += new System.EventHandler(this.CalculateAge);
             // 
-            // tabPage3
+            // tbNumeralConverter
             // 
-            this.tabPage3.Location = new System.Drawing.Point(4, 44);
-            this.tabPage3.Name = "tabPage3";
-            this.tabPage3.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage3.Size = new System.Drawing.Size(420, 519);
-            this.tabPage3.TabIndex = 2;
-            this.tabPage3.Text = "tabPage3";
-            this.tabPage3.UseVisualStyleBackColor = true;
+            this.tbNumeralConverter.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(64)))));
+            this.tbNumeralConverter.Controls.Add(this.txt2);
+            this.tbNumeralConverter.Controls.Add(this.txt1);
+            this.tbNumeralConverter.Controls.Add(this.cbTo);
+            this.tbNumeralConverter.Controls.Add(this.cbFrom);
+            this.tbNumeralConverter.Location = new System.Drawing.Point(4, 44);
+            this.tbNumeralConverter.Name = "tbNumeralConverter";
+            this.tbNumeralConverter.Padding = new System.Windows.Forms.Padding(3);
+            this.tbNumeralConverter.Size = new System.Drawing.Size(420, 519);
+            this.tbNumeralConverter.TabIndex = 2;
+            this.tbNumeralConverter.Text = "Numeral Converter";
             // 
-            // tabPage4
+            // txt2
             // 
-            this.tabPage4.Location = new System.Drawing.Point(4, 44);
-            this.tabPage4.Name = "tabPage4";
-            this.tabPage4.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage4.Size = new System.Drawing.Size(420, 519);
-            this.tabPage4.TabIndex = 3;
-            this.tabPage4.Text = "tabPage4";
-            this.tabPage4.UseVisualStyleBackColor = true;
+            this.txt2.BorderThickness = 0;
+            this.txt2.ContextMenuStrip = this.guna2ContextMenuStrip2;
+            this.txt2.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txt2.DefaultText = "1";
+            this.txt2.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txt2.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txt2.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txt2.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txt2.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(64)))));
+            this.txt2.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txt2.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txt2.ForeColor = System.Drawing.Color.DarkSeaGreen;
+            this.txt2.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txt2.Location = new System.Drawing.Point(231, 179);
+            this.txt2.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txt2.Multiline = true;
+            this.txt2.Name = "txt2";
+            this.txt2.PasswordChar = '\0';
+            this.txt2.PlaceholderText = "";
+            this.txt2.SelectedText = "";
+            this.txt2.Size = new System.Drawing.Size(173, 108);
+            this.txt2.TabIndex = 3;
+            this.txt2.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txt2.TextChanged += new System.EventHandler(this.ConvertNum);
+            this.txt2.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.txt2_KeyPress);
+            // 
+            // txt1
+            // 
+            this.txt1.BorderThickness = 0;
+            this.txt1.ContextMenuStrip = this.guna2ContextMenuStrip2;
+            this.txt1.Cursor = System.Windows.Forms.Cursors.IBeam;
+            this.txt1.DefaultText = "1";
+            this.txt1.DisabledState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(208)))), ((int)(((byte)(208)))), ((int)(((byte)(208)))));
+            this.txt1.DisabledState.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(226)))), ((int)(((byte)(226)))), ((int)(((byte)(226)))));
+            this.txt1.DisabledState.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txt1.DisabledState.PlaceholderForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(138)))), ((int)(((byte)(138)))), ((int)(((byte)(138)))));
+            this.txt1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(64)))));
+            this.txt1.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txt1.Font = new System.Drawing.Font("Segoe UI", 9F);
+            this.txt1.ForeColor = System.Drawing.Color.DarkSeaGreen;
+            this.txt1.HoverState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.txt1.Location = new System.Drawing.Point(231, 60);
+            this.txt1.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
+            this.txt1.Multiline = true;
+            this.txt1.Name = "txt1";
+            this.txt1.PasswordChar = '\0';
+            this.txt1.PlaceholderText = "";
+            this.txt1.SelectedText = "";
+            this.txt1.Size = new System.Drawing.Size(173, 108);
+            this.txt1.TabIndex = 0;
+            this.txt1.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
+            this.txt1.TextChanged += new System.EventHandler(this.ConvertNum);
+            this.txt1.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.IsInputCorrect);
+            // 
+            // cbTo
+            // 
+            this.cbTo.BackColor = System.Drawing.Color.Transparent;
+            this.cbTo.BorderRadius = 10;
+            this.cbTo.BorderThickness = 0;
+            this.cbTo.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbTo.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbTo.FillColor = System.Drawing.Color.DarkSeaGreen;
+            this.cbTo.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbTo.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbTo.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbTo.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbTo.ItemHeight = 30;
+            this.cbTo.Items.AddRange(new object[] {
+            "Binary",
+            "Octal",
+            "Decimal",
+            "Hexadecimal"});
+            this.cbTo.Location = new System.Drawing.Point(30, 179);
+            this.cbTo.Name = "cbTo";
+            this.cbTo.Size = new System.Drawing.Size(165, 36);
+            this.cbTo.StartIndex = 2;
+            this.cbTo.TabIndex = 2;
+            this.cbTo.SelectedIndexChanged += new System.EventHandler(this.ConvertNum);
+            // 
+            // cbFrom
+            // 
+            this.cbFrom.BackColor = System.Drawing.Color.Transparent;
+            this.cbFrom.BorderRadius = 10;
+            this.cbFrom.BorderThickness = 0;
+            this.cbFrom.DrawMode = System.Windows.Forms.DrawMode.OwnerDrawFixed;
+            this.cbFrom.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cbFrom.FillColor = System.Drawing.Color.DarkSeaGreen;
+            this.cbFrom.FocusedColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbFrom.FocusedState.BorderColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbFrom.Font = new System.Drawing.Font("Segoe UI", 10F);
+            this.cbFrom.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(94)))), ((int)(((byte)(148)))), ((int)(((byte)(255)))));
+            this.cbFrom.ItemHeight = 30;
+            this.cbFrom.Items.AddRange(new object[] {
+            "Binary",
+            "Octal",
+            "Decimal",
+            "Hexadecimal"});
+            this.cbFrom.Location = new System.Drawing.Point(30, 60);
+            this.cbFrom.Name = "cbFrom";
+            this.cbFrom.Size = new System.Drawing.Size(165, 36);
+            this.cbFrom.StartIndex = 0;
+            this.cbFrom.TabIndex = 1;
+            this.cbFrom.SelectedIndexChanged += new System.EventHandler(this.ConvertNum);
+            // 
+            // guna2ContextMenuStrip2
+            // 
+            this.guna2ContextMenuStrip2.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.guna2ContextMenuStrip2.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.copyToolStripMenuItem1,
+            this.copyBothToolStripMenuItem});
+            this.guna2ContextMenuStrip2.Name = "guna2ContextMenuStrip2";
+            this.guna2ContextMenuStrip2.RenderStyle.ArrowColor = System.Drawing.Color.FromArgb(((int)(((byte)(151)))), ((int)(((byte)(143)))), ((int)(((byte)(255)))));
+            this.guna2ContextMenuStrip2.RenderStyle.BorderColor = System.Drawing.Color.Gainsboro;
+            this.guna2ContextMenuStrip2.RenderStyle.ColorTable = null;
+            this.guna2ContextMenuStrip2.RenderStyle.RoundedEdges = true;
+            this.guna2ContextMenuStrip2.RenderStyle.SelectionArrowColor = System.Drawing.Color.White;
+            this.guna2ContextMenuStrip2.RenderStyle.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(88)))), ((int)(((byte)(255)))));
+            this.guna2ContextMenuStrip2.RenderStyle.SelectionForeColor = System.Drawing.Color.White;
+            this.guna2ContextMenuStrip2.RenderStyle.SeparatorColor = System.Drawing.Color.Gainsboro;
+            this.guna2ContextMenuStrip2.RenderStyle.TextRenderingHint = System.Drawing.Text.TextRenderingHint.SystemDefault;
+            this.guna2ContextMenuStrip2.Size = new System.Drawing.Size(211, 80);
+            // 
+            // copyToolStripMenuItem1
+            // 
+            this.copyToolStripMenuItem1.Name = "copyToolStripMenuItem1";
+            this.copyToolStripMenuItem1.Size = new System.Drawing.Size(210, 24);
+            this.copyToolStripMenuItem1.Text = "Copy";
+            this.copyToolStripMenuItem1.Click += new System.EventHandler(this.copyToolStripMenuItem1_Click);
+            // 
+            // copyBothToolStripMenuItem
+            // 
+            this.copyBothToolStripMenuItem.Name = "copyBothToolStripMenuItem";
+            this.copyBothToolStripMenuItem.Size = new System.Drawing.Size(210, 24);
+            this.copyBothToolStripMenuItem.Text = "Copy Both";
+            this.copyBothToolStripMenuItem.Click += new System.EventHandler(this.copyBothToolStripMenuItem_Click);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(66)))));
-            this.ClientSize = new System.Drawing.Size(422, 555);
+            this.ClientSize = new System.Drawing.Size(420, 555);
             this.Controls.Add(this.guna2TabControl1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
@@ -1033,6 +1172,8 @@
             this.tbAge.ResumeLayout(false);
             this.guna2Panel1.ResumeLayout(false);
             this.guna2Panel1.PerformLayout();
+            this.tbNumeralConverter.ResumeLayout(false);
+            this.guna2ContextMenuStrip2.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -1042,8 +1183,7 @@
         private Guna.UI2.WinForms.Guna2TabControl guna2TabControl1;
         private System.Windows.Forms.TabPage tpMath;
         private System.Windows.Forms.TabPage tbAge;
-        private System.Windows.Forms.TabPage tabPage3;
-        private System.Windows.Forms.TabPage tabPage4;
+        private System.Windows.Forms.TabPage tbNumeralConverter;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label lblOperation;
         private Guna.UI2.WinForms.Guna2TextBox txtOperation;
@@ -1102,5 +1242,12 @@
         private System.Windows.Forms.Label lblMonthstxt;
         private System.Windows.Forms.Label lblDaystxt;
         private System.Windows.Forms.Label lblNextBirthdaytxt;
+        private Guna.UI2.WinForms.Guna2ComboBox cbFrom;
+        private Guna.UI2.WinForms.Guna2ComboBox cbTo;
+        private Guna.UI2.WinForms.Guna2TextBox txt2;
+        private Guna.UI2.WinForms.Guna2TextBox txt1;
+        private Guna.UI2.WinForms.Guna2ContextMenuStrip guna2ContextMenuStrip2;
+        private System.Windows.Forms.ToolStripMenuItem copyToolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem copyBothToolStripMenuItem;
     }
 }
