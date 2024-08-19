@@ -748,7 +748,6 @@ namespace Calculator
         }
         private void ConvertHexadecimalToDecimal(object sender)
         {
-            string DecimalString = "";
             ulong DecimalNumber = 0;
 
             for (int i = 0; i < txt1.TextLength; i++)
